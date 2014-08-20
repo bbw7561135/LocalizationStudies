@@ -537,9 +537,13 @@ def UnbinnedLikelihood(sourceName, ra, dec, tmin, tmax, PerformLikelihoodFit=Tru
 	time.sleep(waitTime)
 	print "Proceeding."
 
-	# Setup some defaults directories
+	# Setup analysis directories
 	AnalysisDirectory = '/nfs/farm/g/glast/u54/kocevski/Analysis/LocalizationStudies'
-	extendedSourcesDirectory = "%s/Templates" % AnalysisDirectory
+
+	# Setup the location of the extended sources
+	#extendedSourcesDirectory = "%s/Templates" % AnalysisDirectory
+	extendedSourcesDirectory = '/nfs/slac/g/ki/ki08/kocevski/FAVA/extendedSources/Templates'
+
 
 	if UsePass8 == True:
 		OutputDirectory = "%s/Likelihood/P8_P301/%s" % (AnalysisDirectory, sourceName)
@@ -1443,7 +1447,9 @@ def UnbinnedLikelihood(sourceName, ra, dec, tmin, tmax, PerformLikelihoodFit=Tru
 
 	# Delete working files
 	os.system("rm %s/LC_*%s.*" % (OutputDirectory, sourceName))
-	os.system("rm %s/ft1_*%s.*" % (OutputDirectory, sourceName))
+	os.system("rm %s/FT1*.fits" % OutputDirectory)
+	os.system("rm %s/FT2*.fits" % OutputDirectory)	
+	os.system("rm %s/ft1_filtered_%s.fits" % (OutputDirectory, sourceName))
 	os.system("rm %s/expmap_*%s.*" % (OutputDirectory, sourceName))
 	os.system("rm %s/bexpmap_*%s.*" % (OutputDirectory, sourceName))
 	os.system("rm %s/ltcube_*%s.*" % (OutputDirectory, sourceName))
@@ -1451,7 +1457,7 @@ def UnbinnedLikelihood(sourceName, ra, dec, tmin, tmax, PerformLikelihoodFit=Tru
 	os.system("rm %s/cmap_*%s.*" % (OutputDirectory, sourceName))
 	os.system("rm %s/srcmap_*%s.*" % (OutputDirectory, sourceName))
 	os.system("rm %s/modelmap_*%s.fits" % (OutputDirectory, sourceName))
-	os.system("rm %s/Model%s_Fit.xml" % (OutputDirectory, sourceName))
+	os.system("rm %s/Model_%s_Background.xml" % (OutputDirectory, sourceName))
 	os.system("rm %s/Model%s_Fit_Modified.xml" % (OutputDirectory, sourceName))
 
 	print 'Done.\n'
